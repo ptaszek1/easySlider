@@ -1,0 +1,19 @@
+// {
+//     "presets": ["@babel/preset-env",["minify", {
+//         "builtIns": false
+//     }]]
+// }
+
+{
+    "presets": [
+        ["@babel/env", {
+            "targets": {
+            "browsers": ["cover 99.5%"]
+            }
+        }],
+        ["minify", {
+            "builtIns": false
+        }]
+    ]
+  }
+  
