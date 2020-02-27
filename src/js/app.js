@@ -85,7 +85,6 @@ class clearSlider {
             // Set active slide
             this.slides[activeSlideIndex].classList.add('es-active-slide');
             if(this.slidesPerView > 1) {
-                console.log(-this.sizes.width * activeSlideIndex + this.sizes.width)
                 this.wrapper.style.transform = `translate3d(${((-this.sizes.width * activeSlideIndex) / this.slidesPerView)}px, 0px, 0px)`;  
             } else {
                 this.wrapper.style.transform = `translate3d(-${this.sizes.width * (activeSlideIndex)}px, 0px, 0px)`;
@@ -122,11 +121,16 @@ class clearSlider {
         }
     }
     nextSlide() {
-        this.activeSlide++;
-        this.setActiveSlide();
+        if(this.activeSlide <= this.slides.length - this.slidesPerView) {
+            this.activeSlide++;
+            this.setActiveSlide();
+        }
     }
     prevSlide() {
-        this.activeSlide--;
+        if(this.activeSlide >= 2) {
+            this.activeSlide--;
+            this.setActiveSlide();
+        }
         this.setActiveSlide();
     }
     runAutoplay() {
@@ -153,7 +157,7 @@ class clearSlider {
 
 const simpleSlider = new clearSlider('.es-container',{
     speed: 300,
-    slidesPerView: 2,
+    slidesPerView: 1,
     activeSlide: 1,
     navigation: true,
     autoplay: false,
