@@ -4,8 +4,10 @@ class clearSlider {
         this.random = false;
         this.autoplay = false;
         this.navigation = false;
+        this.pagination = false;
         this.next;
         this.prev;
+        this.paginationItems = [];
         this.customWrapper = '';
         this.speed = 400;
         this.activeSlide = 0;
@@ -21,6 +23,7 @@ class clearSlider {
     setEventClick() {
         this.next.addEventListener("click", this.nextSlide.bind(this));
         this.prev.addEventListener("click", this.prevSlide.bind(this));
+        this.paginationItems.addEventListener("click", this.paginationSetActive.bind(this));
     }
     setEventResize(){
         window.addEventListener("resize", this.setSize.bind(this));
@@ -32,11 +35,13 @@ class clearSlider {
         this.sizes = this.slidesSize();
         this.randomValue = this.randomSlide();
         // this.error = this.error();
+        this.createPagination();
         this.setSize();
         this.setSlideIndex();
         this.setActiveSlide();
         this.getNavigation();
         this.runAutoplay();
+        
     }
     getParent() {
         return (typeof this.main === 'string' && this.main.length > 1) ? document.querySelector(this.main): '';
@@ -148,6 +153,26 @@ class clearSlider {
             }
         }
     }
+    createPagination() {
+        if(this.main && this.pagination === true) {
+            let pagination = document.createElement('div');
+            pagination.classList.add('es-pagination');
+            this.parent.appendChild(pagination);
+
+            for(let i = 0; i < this.slides.length; i++) {
+                let paginationEl = document.createElement('div');
+                paginationEl.classList.add('es-pagination-item')
+                paginationEl.setAttribute('data-index', i + 1);
+                pagination.appendChild(paginationEl);
+
+                // Create array with pagination elements
+                this.paginationItems.push(paginationEl);
+            }
+        }
+    }
+    paginationSetActive() {
+        console.log()
+    }
 }
 
 
@@ -162,7 +187,8 @@ const simpleSlider = new clearSlider('.es-container',{
     navigation: true,
     autoplay: false,
     autoplaySpeed: 1200,
-    autoplayDirection: 'right'
+    autoplayDirection: 'right',
+    pagination: true
 });
 
 console.log(simpleSlider);
