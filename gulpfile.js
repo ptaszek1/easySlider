@@ -47,7 +47,7 @@ function compile(watch) {
             .pipe(sourcemaps.init({loadMaps: true}))
             .pipe(uglify())
             .pipe(sourcemaps.write('.'))
-            .pipe(gulp.dest('src/js'));
+            .pipe(gulp.dest('./dist/js'));
     }
 
     if (watch) {
@@ -77,7 +77,7 @@ gulp.task('sass', function () {
             browsers: ['last 5 versions'],
         }))
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('./src/css'));
+        .pipe(gulp.dest('./dist/css'));
 });
 
 function watch() {
