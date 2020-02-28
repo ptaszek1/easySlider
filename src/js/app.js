@@ -8,6 +8,7 @@ class clearSlider {
         this.next;
         this.prev;
         this.paginationItems = [];
+        this.paginationActive;
         this.customWrapper = '';
         this.speed = 400;
         this.activeSlide = 0;
@@ -21,9 +22,15 @@ class clearSlider {
         this.setEventClick();
     }
     setEventClick() {
-        this.next.addEventListener("click", this.nextSlide.bind(this));
-        this.prev.addEventListener("click", this.prevSlide.bind(this));
-        this.paginationItems.addEventListener("click", this.paginationSetActive.bind(this));
+        let self = this;
+        self.next.addEventListener("click", this.nextSlide.bind(this));
+        self.prev.addEventListener("click", this.prevSlide.bind(this));
+        for(let i = 0; i < self.paginationItems.length; i++) {
+            self.paginationItems[i].addEventListener("click", function () {
+                self.paginationActive = this.dataset.index;
+                self.paginationSetActive(this)
+            });
+        }
     }
     setEventResize(){
         window.addEventListener("resize", this.setSize.bind(this));
@@ -170,19 +177,16 @@ class clearSlider {
             }
         }
     }
-    paginationSetActive() {
-        console.log()
+    paginationSetActive(paginationButton) {
+       this.activeSlide = Number(paginationButton.dataset.index);
+       this.setActiveSlide();
     }
 }
 
 
-
-
-// Zrobić wyłączanie navigacji jak dojedzie do końca
-
 const simpleSlider = new clearSlider('.es-container',{
     speed: 300,
-    slidesPerView: 1,
+    slidesPerView: 2,
     activeSlide: 1,
     navigation: true,
     autoplay: false,
