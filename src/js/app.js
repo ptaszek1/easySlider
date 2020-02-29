@@ -72,7 +72,11 @@ class clearSlider {
         if(this.slides.length > 0) {
             for(let i = 0; i < this.slides.length; i++) {
                 if(this.slidesPerView > 1 && this.slidesPerView <= this.slides.length) {
-                    this.slides[i].style.width = (this.sizes.width / this.slidesPerView) + 'px';
+                    if(this.spaceBetween > 0) {
+                        this.slides[i].style.width = ((this.sizes.width / this.slidesPerView) - ((this.spaceBetween / this.slidesPerView * this.slidesPerView) - (this.spaceBetween / this.slidesPerView))) + 'px';
+                    } else {
+                        this.slides[i].style.width = (this.sizes.width / this.slidesPerView) + 'px';
+                    }
                 } else {
                     this.slides[i].style.width = this.sizes.width + 'px';
                 }
@@ -88,13 +92,9 @@ class clearSlider {
     }
     setActiveSlide(){
         let activeSlideIndex = this.activeSlide -1;
-        let spaceBetweenElements = 0;
         // If random is set to true.
         if(this.random === true) {
             activeSlideIndex = this.randomValue -1;
-        }
-        if(this.spaceBetween > 0) {
-            spaceBetweenElements = this.spaceBetween;
         }
         if(this.slides.length >= this.slidesPerView && activeSlideIndex >= 0 && this.activeSlide <= this.slides.length) {
             for(var i = 0; i < this.slides.length; i++) {
@@ -103,7 +103,7 @@ class clearSlider {
             // Set active slide
             this.slides[activeSlideIndex].classList.add('es-active-slide');
             if(this.slidesPerView > 1) {
-                this.wrapper.style.transform = `translate3d(${((-this.sizes.width * activeSlideIndex) / this.slidesPerView)}px, 0px, 0px)`;  
+                this.wrapper.style.transform = `translate3d(${((-this.sizes.width * activeSlideIndex) / this.slidesPerView) - ((this.spaceBetween / this.slidesPerView) * activeSlideIndex)}px, 0px, 0px)`;  
             } else {
                 this.wrapper.style.transform = `translate3d(-${this.sizes.width * (activeSlideIndex)}px, 0px, 0px)`;
             }
@@ -193,7 +193,7 @@ class clearSlider {
        this.setActiveSlide();
     }
     setSpaceBetween() {
-        if(this.spaceBetween > 0) {
+        if(this.spaceBetween > 0 && this.slidesPerView > 1) {
             for(var i = 0; i < this.slides.length; i++) {
                 this.slides[i].style.marginRight = this.spaceBetween + 'px';
             }
@@ -211,7 +211,7 @@ const simpleSlider = new clearSlider('.es-container',{
     autoplaySpeed: 1200,
     autoplayDirection: 'right',
     pagination: true,
-    spaceBetween: 30
+    spaceBetween: 100
 });
 
 console.log(simpleSlider);
