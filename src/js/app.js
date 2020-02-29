@@ -15,6 +15,7 @@ class clearSlider {
         this.autoplaySpeed;
         this.spaceBetween = 0;
         this.autoplayDirection;
+        this.centeredSlides = false;
         Object.assign(this,config);
         this.init();
         this.setEventResize();
@@ -217,6 +218,7 @@ const simpleSlider = new clearSlider('.es-container',{
     autoplaySpeed: 500,
     autoplayDirection: 'left',
     pagination: true,
+    centeredSlides: true
 });
 
 console.log(simpleSlider);
