@@ -160,7 +160,9 @@ class clearSlider {
                 }, this.autoplaySpeed);
             } else {
                 setInterval(() => {
-                    this.activeSlide++;
+                    if(this.activeSlide <= this.slides.length - this.slidesPerView) {
+                        this.activeSlide++;
+                    }
                     this.setActiveSlide();
                 }, this.autoplaySpeed);
             }
@@ -205,13 +207,13 @@ class clearSlider {
 const simpleSlider = new clearSlider('.es-container',{
     speed: 300,
     slidesPerView: 2,
-    activeSlide: 1,
+    activeSlide: 11,
     navigation: true,
-    autoplay: false,
-    autoplaySpeed: 1200,
-    autoplayDirection: 'right',
+    autoplay: true,
+    autoplaySpeed: 500,
+    autoplayDirection: 'left',
     pagination: true,
-    spaceBetween: 100
+    spaceBetween: 1
 });
 
 console.log(simpleSlider);
