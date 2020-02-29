@@ -8,13 +8,12 @@ class clearSlider {
         this.next;
         this.prev;
         this.paginationItems = [];
-        this.paginationActive;
-        this.customWrapper = '';
         this.speed = 400;
         this.activeSlide = 0;
         this.slidesPerView = 1;
         this.sizes;
         this.autoplaySpeed;
+        this.spaceBetween;
         this.autoplayDirection;
         Object.assign(this,config);
         this.init();
@@ -27,7 +26,6 @@ class clearSlider {
         self.prev.addEventListener("click", this.prevSlide.bind(this));
         for(let i = 0; i < self.paginationItems.length; i++) {
             self.paginationItems[i].addEventListener("click", function () {
-                self.paginationActive = this.dataset.index;
                 self.paginationSetActive(this)
             });
         }
@@ -48,6 +46,7 @@ class clearSlider {
         this.setActiveSlide();
         this.getNavigation();
         this.runAutoplay();
+        this.setSpaceBetween();
         
     }
     getParent() {
@@ -89,11 +88,18 @@ class clearSlider {
     }
     setActiveSlide(){
         let activeSlideIndex = this.activeSlide -1;
+        let spaceBetweenElements = 0;
         // If random is set to true.
         if(this.random === true) {
             activeSlideIndex = this.randomValue -1;
         }
+        if(this.spaceBetween > 0) {
+            spaceBetweenElements = this.spaceBetween;
+        }
         if(this.slides.length >= this.slidesPerView && activeSlideIndex >= 0 && this.activeSlide <= this.slides.length) {
+            for(var i = 0; i < this.slides.length; i++) {
+                this.slides[i].classList.remove('es-active-slide','es-previous-slide','es-next-slide')
+            }
             // Set active slide
             this.slides[activeSlideIndex].classList.add('es-active-slide');
             if(this.slidesPerView > 1) {
@@ -178,21 +184,34 @@ class clearSlider {
         }
     }
     paginationSetActive(paginationButton) {
-       this.activeSlide = Number(paginationButton.dataset.index) -( this.slidesPerView -1);
+        if(Number(paginationButton.dataset.index) - (this.slidesPerView -1) < 1) {
+            this.activeSlide = paginationButton.dataset.index;
+            console.log('pierwszy if')
+        } else {
+            this.activeSlide = Number(paginationButton.dataset.index) - (this.slidesPerView -1);
+        }
        this.setActiveSlide();
+    }
+    setSpaceBetween() {
+        if(this.spaceBetween > 0) {
+            for(var i = 0; i < this.slides.length; i++) {
+                this.slides[i].style.marginRight = this.spaceBetween + 'px';
+            }
+        }
     }
 }
 
 
 const simpleSlider = new clearSlider('.es-container',{
     speed: 300,
-    slidesPerView: 5,
+    slidesPerView: 2,
     activeSlide: 1,
     navigation: true,
     autoplay: false,
     autoplaySpeed: 1200,
     autoplayDirection: 'right',
-    pagination: true
+    pagination: true,
+    spaceBetween: 30
 });
 
 console.log(simpleSlider);
