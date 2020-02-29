@@ -178,7 +178,7 @@ class clearSlider {
         }
     }
     paginationSetActive(paginationButton) {
-       this.activeSlide = Number(paginationButton.dataset.index);
+       this.activeSlide = Number(paginationButton.dataset.index) -( this.slidesPerView -1);
        this.setActiveSlide();
     }
 }
@@ -186,7 +186,7 @@ class clearSlider {
 
 const simpleSlider = new clearSlider('.es-container',{
     speed: 300,
-    slidesPerView: 2,
+    slidesPerView: 5,
     activeSlide: 1,
     navigation: true,
     autoplay: false,
