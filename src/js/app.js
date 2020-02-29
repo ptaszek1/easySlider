@@ -13,7 +13,7 @@ class clearSlider {
         this.slidesPerView = 1;
         this.sizes;
         this.autoplaySpeed;
-        this.spaceBetween;
+        this.spaceBetween = 0;
         this.autoplayDirection;
         Object.assign(this,config);
         this.init();
@@ -92,6 +92,10 @@ class clearSlider {
     }
     setActiveSlide(){
         let activeSlideIndex = this.activeSlide -1;
+
+        if(activeSlideIndex > this.slides.length - this.slidesPerView) {
+            activeSlideIndex = this.activeSlide - this.slidesPerView;
+        }
         // If random is set to true.
         if(this.random === true) {
             activeSlideIndex = this.randomValue -1;
@@ -206,14 +210,13 @@ class clearSlider {
 
 const simpleSlider = new clearSlider('.es-container',{
     speed: 300,
-    slidesPerView: 2,
-    activeSlide: 11,
+    slidesPerView: 4,
+    activeSlide: 12,
     navigation: true,
-    autoplay: true,
+    autoplay: false,
     autoplaySpeed: 500,
     autoplayDirection: 'left',
     pagination: true,
-    spaceBetween: 1
 });
 
 console.log(simpleSlider);
